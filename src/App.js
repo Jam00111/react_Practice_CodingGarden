@@ -90,12 +90,15 @@ class App extends Component {
         </form>
         <ul>
           {this.state.todos.map((todo, index) => {
-            return (<div class="row"><li key={todo.title}>
-              <div className="col"><input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done} />
+            return (<li key={todo.title}><div class="row">
+              <div className="col-md-2">
+              <input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done} />
                 {/* <span style={{ textDecoration: todo.done ? 'line-through' : 'inherit'}}>{todo.title}</span> */}
                 <span className={todo.done ? 'done' : ''}>{todo.title}</span></div>
-              <div className="col"> <button className="btn btn-primary mb-2" onClick={() => this.removeTodo(index)}>Remove</button></div>
-            </li></div>)
+              <div className="col-md-2">
+                <Button bsStyle="btn btn-primary" onClick={() => this.removeTodo(index)} bsSize="small">Remove</Button>
+              </div>
+            </div></li>)
           })}
         </ul>
       </div>
