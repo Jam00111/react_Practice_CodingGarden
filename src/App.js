@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button, ButtonToolbar } from 'react-bootstrap';
 import './App.css';
 
 class App extends Component {
@@ -73,23 +74,28 @@ class App extends Component {
     return (
       <div className="container">
         <h3>{this.state.message}</h3>
-        <form className="form-inline" onSubmit={(event) => this.formSubmitted(event)}>
-          <div className="form-group mb-2">
-            <label htmlFor="newTodo">New Todo </label>
-            <input className="form-control" onChange={(event) => this.newTododChanged(event)} id="newTodo" name="newTodo" value={this.state.newTodo} />
+        <form onSubmit={(event) => this.formSubmitted(event)}>
+          <div className="row">
+            <div className="col">
+              <input className="form-control" onChange={(event) => this.newTododChanged(event)}
+                id="newTodo" name="newTodo" value={this.state.newTodo} placeholder="new todo" />
+            </div>
+            <div className="col">
+              <Button type="submit" bsStyle="btn btn-primary">Add Todo</Button>
+            </div>
+            <div className="col">
+              <Button bsStyle="btn btn-primary" onClick={() => this.allDone()}>All Done</Button>
+            </div>
           </div>
-          <button type="submit" className="btn btn-primary mb-2">Add Todo</button>
         </form>
-        <button className="btn btn-primary mb-2" onClick={() => this.allDone()}>All Done</button>
-
         <ul>
           {this.state.todos.map((todo, index) => {
-            return (<li key={todo.title}>
-              <input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done} />
-              {/* <span style={{ textDecoration: todo.done ? 'line-through' : 'inherit'}}>{todo.title}</span> */}
-              <span className={todo.done ? 'done' : ''}>{todo.title}</span>
-              <button className="btn btn-primary mb-2" onClick={() => this.removeTodo(index)}>Remove</button>
-            </li>)
+            return (<div class="row"><li key={todo.title}>
+              <div className="col"><input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done} />
+                {/* <span style={{ textDecoration: todo.done ? 'line-through' : 'inherit'}}>{todo.title}</span> */}
+                <span className={todo.done ? 'done' : ''}>{todo.title}</span></div>
+              <div className="col"> <button className="btn btn-primary mb-2" onClick={() => this.removeTodo(index)}>Remove</button></div>
+            </li></div>)
           })}
         </ul>
       </div>
