@@ -35,7 +35,7 @@ class App extends Component {
     });
   }
 
-  toggleTodoDone(event, index){
+  toggleTodoDone(event, index) {
     console.log(event.target.checked);
     const todos = [...this.state.todos];
     todos[index] = {
@@ -47,7 +47,7 @@ class App extends Component {
     });
   }
 
-  removeTodo(index){
+  removeTodo(index) {
     const todos = [...this.state.todos];
     todos.splice(index, 1);
 
@@ -56,36 +56,39 @@ class App extends Component {
     });
   }
 
-  allDone(){
-    const todos = this.state.todos.map(todo =>{
-      return{
+  allDone() {
+    const todos = this.state.todos.map(todo => {
+      return {
         title: todo.title,
         done: true
       }
     });
-    
+
     this.setState({
-     todos 
+      todos
     });
   }
 
   render() {
     return (
-      <div className="App">
+      <div className="container">
         <h3>{this.state.message}</h3>
-        <form onSubmit={(event) => this.formSubmitted(event)}>
-          <label htmlFor="newTodo">New Todo</label>
-          <input onChange={(event) => this.newTododChanged(event)} id="newTodo" name="newTodo" value={this.state.newTodo} />
-          <button type="submit">Add Todo</button>
+        <form className="form-inline" onSubmit={(event) => this.formSubmitted(event)}>
+          <div className="form-group mb-2">
+            <label htmlFor="newTodo">New Todo </label>
+            <input className="form-control" onChange={(event) => this.newTododChanged(event)} id="newTodo" name="newTodo" value={this.state.newTodo} />
+          </div>
+          <button type="submit" className="btn btn-primary mb-2">Add Todo</button>
         </form>
-        <button onClick={() => this.allDone()}>All Done</button>
+        <button className="btn btn-primary mb-2" onClick={() => this.allDone()}>All Done</button>
+
         <ul>
           {this.state.todos.map((todo, index) => {
             return (<li key={todo.title}>
-            <input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done}/>
-            {/* <span style={{ textDecoration: todo.done ? 'line-through' : 'inherit'}}>{todo.title}</span> */}
-            <span className={todo.done ? 'done' : ''}>{todo.title}</span>
-            <button onClick={() => this.removeTodo(index)}>Remove</button>
+              <input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done} />
+              {/* <span style={{ textDecoration: todo.done ? 'line-through' : 'inherit'}}>{todo.title}</span> */}
+              <span className={todo.done ? 'done' : ''}>{todo.title}</span>
+              <button className="btn btn-primary mb-2" onClick={() => this.removeTodo(index)}>Remove</button>
             </li>)
           })}
         </ul>
