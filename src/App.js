@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Button, ButtonToolbar } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import './App.css';
+import NewTodoForm from './NewTodoForm';
+import TodoList from './TodoList';
 
 class App extends Component {
   constructor() {
@@ -74,33 +76,24 @@ class App extends Component {
     return (
       <div className="container">
         <h3>{this.state.message}</h3>
-        <form onSubmit={(event) => this.formSubmitted(event)}>
-          <div className="row">
-            <div className="col">
-              <input className="form-control" onChange={(event) => this.newTododChanged(event)}
-                id="newTodo" name="newTodo" value={this.state.newTodo} placeholder="new todo" />
-            </div>
-            <div className="col">
-              <Button type="submit" bsStyle="btn btn-primary">Add Todo</Button>
-            </div>
-            <div className="col">
-              <Button bsStyle="btn btn-primary" onClick={() => this.allDone()}>All Done</Button>
-            </div>
+        <NewTodoForm
+          formSubmitted={this.formSubmitted.bind(this)}
+          newTododChanged={this.newTododChanged.bind(this)}
+          newTodo={this.state.newTodo} />
+
+        <div className="row">
+          <div className="col-md-4">
           </div>
-        </form>
-        <ul>
-          {this.state.todos.map((todo, index) => {
-            return (<li key={todo.title}><div class="row">
-              <div className="col-md-2">
-              <input onChange={(event) => this.toggleTodoDone(event, index)} type="checkbox" checked={todo.done} />
-                {/* <span style={{ textDecoration: todo.done ? 'line-through' : 'inherit'}}>{todo.title}</span> */}
-                <span className={todo.done ? 'done' : ''}>{todo.title}</span></div>
-              <div className="col-md-2">
-                <Button bsStyle="btn btn-primary" onClick={() => this.removeTodo(index)} bsSize="small">Remove</Button>
-              </div>
-            </div></li>)
-          })}
-        </ul>
+          <div className="col-md-2">
+            <Button bsStyle="primary" onClick={() => this.allDone()}>All Done</Button>
+          </div>
+        </div>
+
+        <TodoList
+          todos={this.state.todos}
+          toggleTodoDone={this.toggleTodoDone.bind(this)}
+          removeTodo={this.removeTodo.bind(this)}
+        />
       </div>
     );
   }
